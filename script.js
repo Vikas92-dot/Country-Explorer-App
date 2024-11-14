@@ -32,6 +32,63 @@ function DiscoverMap(){
 
     searchBar.setAttribute("style","font-size: 100%; padding: 0 0.62em; color:#222a43; padding:10px; border:1px solid white;");
 
+        // Country list in JS file
+    countryList = [
+        "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia",
+        "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium",
+        "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria",
+        "Burkina Faso", "Burundi", "Cabo Verde", "Cambodia", "Cameroon", "Canada", "Central African Republic", "Chad",
+        "Chile", "China", "Colombia", "Comoros", "Congo (Congo-Brazzaville)", "Congo (Democratic Republic of the Congo)",
+        "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czechia (Czech Republic)", "Denmark", "Djibouti", "Dominica",
+        "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini",
+        "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada",
+        "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia",
+        "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati",
+        "Korea (North)", "Korea (South)", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia",
+        "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali",
+        "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia",
+        "Montenegro", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand",
+        "Nicaragua", "Niger", "Nigeria", "North Macedonia", "Norway", "Oman", "Pakistan", "Palau", "Panama", "Papua New Guinea",
+        "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis",
+        "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia",
+        "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia",
+        "South Africa", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria", "Taiwan",
+        "Tajikistan", "Tanzania", "Thailand", "Timor-Leste", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey",
+        "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay",
+        "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"
+    ];
+
+    // Create a container for the country suggestions
+    let suggestionsContainer = document.createElement("div");
+    suggestionsContainer.setAttribute("id", "suggestions-container");
+    suggestionsContainer.setAttribute("style", "position: absolute; top: 65%; left: 2.5%; width: 60%; background: white; border: 1px solid #ccc; max-height: 200px; overflow-y: auto; display: none; z-index: 10;");
+    searchDiv.appendChild(suggestionsContainer);
+
+    // Function to display suggestions
+    function showSuggestions(query) {
+        suggestionsContainer.innerHTML = ''; // Clear previous suggestions
+        if (!query) {
+            suggestionsContainer.style.display = 'none';
+            return;
+        }
+        suggestionsContainer.style.display = 'block';
+        const filteredCountries = countryList.filter(country => country.toLowerCase().includes(query.toLowerCase()));
+        filteredCountries.forEach(country => {
+            let suggestionItem = document.createElement("div");
+            suggestionItem.innerText = country;
+            suggestionItem.setAttribute("style", "padding: 8px; cursor: pointer; border-bottom: 1px solid #ddd;");
+            suggestionItem.addEventListener("click", function () {
+                searchBar.value = country;
+                suggestionsContainer.style.display = 'none'; // Hide suggestions after selection
+            });
+            suggestionsContainer.appendChild(suggestionItem);
+        });
+    }
+
+    // Add an event listener to the search bar
+    searchBar.addEventListener("input", function () {
+        showSuggestions(searchBar.value.trim());
+    });
     let searchButton = document.createElement("button");
     searchButton.setAttribute("style","font-size: 100%; background-color: #3d64e6; color: white; padding:10px; border:1px solid white;");
     searchButton.innerText = "Search";
@@ -167,4 +224,5 @@ function DiscoverMap(){
     
     mainDiv.appendChild(h1);
     mainDiv.appendChild(image);
+    autocomplete(searchBar, countries);
 }
