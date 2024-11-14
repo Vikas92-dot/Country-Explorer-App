@@ -37,6 +37,10 @@ function DiscoverMap(){
     searchButton.innerText = "Search";
 
     searchButton.addEventListener("click", function(){
+        if (!searchBar.value) {
+            alert("Please Enter Country Name.");
+            return;
+            }
         ResultPage();
     });
     
