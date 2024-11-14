@@ -136,7 +136,7 @@ function DiscoverMap(){
 
         
         
-        mainBody.appendChild(home);
+        //mainBody.appendChild(home);
         mainBody.appendChild(result);
         
     }
